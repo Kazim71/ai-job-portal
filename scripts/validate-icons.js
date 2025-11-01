@@ -12,11 +12,11 @@ const path = require('path');
 const validIcons = {
   'react-icons/fi': [
     'FiSearch', 'FiLoader', 'FiMessageCircle', 'FiSend', 'FiAlertCircle', 
-    'FiRefreshCw', 'FiMapPin', 'FiClock', 'FiBuilding', 'FiSun', 'FiMoon', 
+    'FiRefreshCw', 'FiMapPin', 'FiClock', 'FiSun', 'FiMoon', 
     'FiMenu', 'FiX', 'FiLogOut', 'FiUser', 'FiSettings'
   ],
   'react-icons/fa': [
-    'FaGithub'
+    'FaGithub', 'FaBuilding'
   ],
   'react-icons/tb': [
     'TbRobot'
@@ -29,7 +29,8 @@ const currentImports = [
   { file: 'src/components/Footer.jsx', package: 'react-icons/fa', icons: ['FaGithub'] },
   { file: 'src/components/Hero.jsx', package: 'react-icons/fi', icons: ['FiSearch', 'FiMapPin'] },
   { file: 'src/components/Hero.jsx', package: 'react-icons/tb', icons: ['TbRobot'] },
-  { file: 'src/components/JobCard.jsx', package: 'react-icons/fi', icons: ['FiMapPin', 'FiClock', 'FiBuilding'] },
+  { file: 'src/components/JobCard.jsx', package: 'react-icons/fi', icons: ['FiMapPin', 'FiClock'] },
+  { file: 'src/components/JobCard.jsx', package: 'react-icons/fa', icons: ['FaBuilding'] },
   { file: 'src/components/Navbar.jsx', package: 'react-icons/fi', icons: ['FiSun', 'FiMoon', 'FiMenu', 'FiX', 'FiLogOut', 'FiUser', 'FiSettings'] },
   { file: 'src/components/Navbar.jsx', package: 'react-icons/fa', icons: ['FaGithub'] }
 ];

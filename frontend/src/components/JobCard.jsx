@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { FiMapPin, FiClock, FiBuilding } from 'react-icons/fi'
+import { FiMapPin, FiClock } from 'react-icons/fi'
+import { FaBuilding } from 'react-icons/fa'
 
 const JobCard = ({ job }) => {
   const navigate = useNavigate()
@@ -27,7 +28,7 @@ const JobCard = ({ job }) => {
               {job.companyId.name}
             </h5>
             <div className='flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400'>
-              <FiBuilding className='h-3 w-3' />
+              <FaBuilding className='h-3 w-3' />
               <span>Company</span>
             </div>
           </div>
