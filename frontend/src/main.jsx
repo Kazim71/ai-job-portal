@@ -19,6 +19,23 @@ createRoot(document.getElementById('root')).render(
     afterSignOutUrl="/"
     afterSignInUrl="/"
     afterSignUpUrl="/"
+    appearance={{
+      baseTheme: undefined,
+      variables: {
+        colorPrimary: '#2563eb',
+        colorBackground: '#ffffff',
+        colorInputBackground: '#f9fafb',
+        colorInputText: '#111827'
+      }
+    }}
+    localization={{
+      signIn: {
+        start: {
+          title: 'Welcome to AI Job Portal',
+          subtitle: 'Sign in to access thousands of job opportunities'
+        }
+      }
+    }}
   >
     <BrowserRouter>
       <ThemeProvider>

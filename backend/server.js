@@ -9,6 +9,7 @@ import companyRoutes from './routes/companyRoutes.js';
 import connectCloudinary from './config/cloudinary.js';
 import jobRoutes from './routes/jobRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import aiRoutes from './routes/aiRoutes.js';
 import { clerkMiddleware } from '@clerk/express'; // Named import!
 
 // Initialize Express
@@ -18,12 +19,17 @@ const app = express();
 connectDB();
 await connectCloudinary();
 
-// Clerk middleware - pass keys from your .env file
+// Clerk middleware with session management
 app.use(
   clerkMiddleware({
     secretKey: process.env.CLERK_SECRET_KEY,
     publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
     frontendApi: process.env.CLERK_FRONTEND_API,
+    sessionTokenCookie: {
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 20 * 60 * 1000 // 20 minutes
+    }
   })
 );
 
@@ -40,6 +46,7 @@ app.post('/webhooks', clerkWebhooks);
 app.use('/api/company', companyRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/ai', aiRoutes);
 
 // Port
 const PORT = process.env.PORT || 5000;

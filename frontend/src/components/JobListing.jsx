@@ -45,17 +45,17 @@ const JobListing = () => {
     }, [jobs, selectedCategories, selectedLocations, searchFilter])
 
     return (
-        <div className='container 2xl:px-20 mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8'>
+        <div className='container 2xl:px-20 mx-auto flex flex-col lg:flex-row max-lg:space-y-8 py-8 px-4'>
 
             {/* Sidebar */}
-            <div className='w-full lg:w-1/4 bg-white px-4'>
+            <div className='w-full lg:w-1/4 bg-white dark:bg-gray-800 px-4 rounded-xl border border-gray-200 dark:border-gray-700 h-fit transition-colors duration-200'>
 
                 {/*  Search Filter from Hero Component */}
                 {
                     isSearched && (searchFilter.title !== "" || searchFilter.location !== "") && (
                         <>
-                            <h3 className='font-medium text-lg mb-4'>Current Search</h3>
-                            <div className='mb-4 text-gray-600'>
+                            <h3 className='font-medium text-lg mb-4 text-gray-900 dark:text-white'>Current Search</h3>
+                            <div className='mb-4 text-gray-600 dark:text-gray-300'>
                                 {searchFilter.title && (
                                     <span className='inline-flex items-center gap-2.5 bg-blue-50 border border-blue-200 px-4 py-1.5 rounded'>
                                         {searchFilter.title}
@@ -73,14 +73,14 @@ const JobListing = () => {
                     )
                 }
 
-                <button onClick={e => setShowFilter(prev => !prev)} className='px-6 py-1.5 rounded border border-gray-400 lg:hidden'>
+                <button onClick={e => setShowFilter(prev => !prev)} className='px-6 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200 lg:hidden font-medium'>
                     {showFilter ? "Close" : "Filters"}
                 </button>
 
                 {/* Category Filter */}
                 <div className={showFilter ? "" : "max-lg:hidden"}>
-                    <h4 className='font-medium text-lg py-4'>Search by Categories</h4>
-                    <ul className='space-y-4 text-gray-600'>
+                    <h4 className='font-medium text-lg py-4 text-gray-900 dark:text-white'>Search by Categories</h4>
+                    <ul className='space-y-4 text-gray-600 dark:text-gray-300'>
                         {
                             JobCategories.map((category, index) => (
                                 <li className='flex gap-3 items-center' key={index}>
@@ -99,8 +99,8 @@ const JobListing = () => {
 
                 {/* Location Filter */}
                 <div className={showFilter ? "" : "max-lg:hidden"}>
-                    <h4 className='font-medium text-lg py-4 pt-14'>Search by Location</h4>
-                    <ul className='space-y-4 text-gray-600'>
+                    <h4 className='font-medium text-lg py-4 pt-14 text-gray-900 dark:text-white'>Search by Location</h4>
+                    <ul className='space-y-4 text-gray-600 dark:text-gray-300'>
                         {
                             JobLocations.map((location, index) => (
                                 <li className='flex gap-3 items-center' key={index}>
@@ -119,9 +119,9 @@ const JobListing = () => {
             </div>
 
             {/* Job listings */}
-            <section className='w-full lg:w-3/4 text-gray-800 max-lg:px-4'>
-                <h3 className='font-medium text-3xl py-2' id='job-list'>Latest jobs</h3>
-                <p className='mb-8'>Get your desired job from top companies</p>
+            <section className='w-full lg:w-3/4 text-gray-800 dark:text-gray-200 lg:pl-8'>
+                <h3 className='font-bold text-3xl py-2 text-gray-900 dark:text-white' id='job-list'>Latest jobs</h3>
+                <p className='mb-8 text-gray-600 dark:text-gray-400'>Get your desired job from top companies</p>
                 <div className='grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4'>
                     {filteredJobs.slice((currentPage - 1) * 6, currentPage * 6).map((job, index) => (
                         <JobCard key={index} job={job} />

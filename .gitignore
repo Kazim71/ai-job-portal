@@ -93,3 +93,22 @@ Thumbs.db
 
 # Sentry
 .sentryclirc
+
+# SSL Certificates
+*.pem
+*.key
+*.crt
+*.cert
+certs/
+
+# API Keys and Secrets
+.env.production
+.env.staging
+
+# Security
+*.p12
+*.pfx
+
+# Local development
+.vscode/settings.json
+.idea/workspace.xml

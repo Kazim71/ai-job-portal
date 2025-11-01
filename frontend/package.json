@@ -6,9 +6,11 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
+    "dev:https": "vite --https",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate-certs": "../scripts/generate-certs.sh"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.53.4",
