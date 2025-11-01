@@ -6,11 +6,13 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "dev:https": "vite --https",
+    "dev:https": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "generate-certs": "../scripts/generate-certs.sh"
+    "generate-certs": "node -e \"console.log('Run: bash ../scripts/generate-certs.sh or ../scripts/generate-certs.bat')\"",
+    "certs:unix": "bash ../scripts/generate-certs.sh",
+    "certs:win": "../scripts/generate-certs.bat"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.53.4",

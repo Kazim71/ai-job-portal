@@ -5,6 +5,7 @@ import ApplyJob from './pages/ApplyJob';
 import Applications from './pages/Applications';
 import RecruiterLogin from './components/RecruiterLogin';
 import { AppContext } from './context/AppContext';
+import { useSessionManager } from './hooks/useSessionManager';
 import Dashboard from './pages/Dashboard';
 import AddJob from './pages/AddJob';
 import ManageJobs from './pages/ManageJobs';
@@ -20,11 +21,14 @@ const NotFound = () => <h2>404 - Page Not Found</h2>;
 const App = () => {
   const { showRecruiterLogin, companyToken } = useContext(AppContext);
   const { isSignedIn, isLoaded, userId } = useAuth();
+  const { isSessionValid } = useSessionManager();
 
-  // Debug Clerk auth state
+  // Debug auth state in development
   useEffect(() => {
-    console.log('Clerk Auth State:', { isSignedIn, isLoaded, userId });
-  }, [isSignedIn, isLoaded, userId]);
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Auth State:', { isSignedIn, isLoaded, userId, isSessionValid });
+    }
+  }, [isSignedIn, isLoaded, userId, isSessionValid]);
 
   return (
     <div className='min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200'>

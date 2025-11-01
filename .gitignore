@@ -99,16 +99,36 @@ Thumbs.db
 *.key
 *.crt
 *.cert
+*.csr
 certs/
+ssl/
 
 # API Keys and Secrets
 .env.production
 .env.staging
+.env.test
+*.secret
+*.token
 
 # Security
 *.p12
 *.pfx
+*.keystore
+*.jks
 
 # Local development
 .vscode/settings.json
 .idea/workspace.xml
+
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# System files
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+
+# Rate limiting cache
+rate-limit-cache/

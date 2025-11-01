@@ -107,23 +107,39 @@ npm start
 
 ### HTTPS Setup (Development)
 
-1. Generate SSL certificates for localhost:
+**Quick Setup:**
 ```bash
-# Install mkcert (if not already installed)
-# macOS
-brew install mkcert
-# Windows (with Chocolatey)
-choco install mkcert
+# Unix/Linux/macOS
+bash scripts/generate-certs.sh
 
-# Create certificates directory
-mkdir frontend/certs
+# Windows
+scripts\generate-certs.bat
 
-# Generate certificates
-mkcert -install
-mkcert -key-file frontend/certs/localhost-key.pem -cert-file frontend/certs/localhost.pem localhost 127.0.0.1
+# Or use npm scripts
+npm run certs:unix   # Unix/Linux/macOS
+npm run certs:win    # Windows
 ```
 
-2. The app will run on `https://localhost:5173` with valid SSL certificates.
+**Manual Setup:**
+1. Install mkcert:
+   - **macOS**: `brew install mkcert`
+   - **Windows**: `choco install mkcert` or `scoop install mkcert`
+   - **Linux**: See [mkcert installation guide](https://github.com/FiloSottile/mkcert#installation)
+
+2. Generate certificates:
+```bash
+mkdir -p frontend/certs
+mkcert -install
+mkcert -key-file frontend/certs/localhost-key.pem -cert-file frontend/certs/localhost.pem localhost 127.0.0.1 ::1
+```
+
+3. Start with HTTPS:
+```bash
+npm run dev:https
+```
+
+**Fallback (OpenSSL):**
+If mkcert is unavailable, the scripts will automatically use OpenSSL as a fallback.
 
 ## 🔐 Authentication & Session Management
 
@@ -219,27 +235,122 @@ curl https://localhost:5000/api/ai/prompts
 
 ## 🚨 Troubleshooting
 
-### Common Issues
+### HTTPS Issues
 
-1. **HTTPS Certificate Issues**
-   ```bash
-   # Regenerate certificates
-   mkcert -key-file frontend/certs/localhost-key.pem -cert-file frontend/certs/localhost.pem localhost
-   ```
+**ERR_SSL_VERSION_OR_CIPHER_MISMATCH:**
+```bash
+# 1. Clean up old certificates
+rm -rf frontend/certs
 
-2. **Session Expiration**
-   - Sessions automatically expire after 20 minutes of inactivity
-   - Server restart will invalidate all sessions
-   - Clear browser cache if experiencing auth issues
+# 2. Regenerate certificates
+bash scripts/generate-certs.sh
 
-3. **AI Service Unavailable**
-   - Check PERPLEXITY_API_KEY in backend .env
-   - Verify API key has sufficient credits
-   - Check network connectivity
+# 3. Clear browser cache and restart
+# Chrome: Settings > Privacy > Clear browsing data
+# Firefox: Settings > Privacy > Clear Data
 
-4. **Dark Mode Issues**
-   - Clear localStorage: `localStorage.removeItem('ai-job-portal-theme')`
-   - Refresh page to reset theme state
+# 4. If still failing, try:
+mkcert -uninstall
+mkcert -install
+```
+
+**Certificate Not Trusted:**
+- **Chrome**: Click "Advanced" → "Proceed to localhost (unsafe)"
+- **Firefox**: Click "Advanced" → "Accept the Risk and Continue"
+- **Safari**: Click "Show Details" → "Visit this website"
+
+**Port Already in Use:**
+```bash
+# Find and kill process using port 5173
+# Windows
+netstat -ano | findstr :5173
+taskkill /PID <PID> /F
+
+# Unix/Linux/macOS
+lsof -ti:5173 | xargs kill -9
+```
+
+### Authentication Issues
+
+**Session Expiration:**
+- Sessions expire after 20 minutes of inactivity
+- Server restart invalidates all sessions
+- Clear browser data: `localStorage.clear()`
+
+**Ghost Login State:**
+```bash
+# Clear all auth data
+localStorage.removeItem('lastActivity')
+localStorage.removeItem('userToken')
+sessionStorage.clear()
+# Refresh page
+```
+
+**Clerk Configuration:**
+- Verify CLERK_PUBLISHABLE_KEY starts with `pk_`
+- Verify CLERK_SECRET_KEY starts with `sk_`
+- Check Clerk dashboard for domain whitelist
+
+### Dark Mode Issues
+
+**Theme Not Persisting:**
+```javascript
+// In browser console
+localStorage.removeItem('ai-job-portal-theme')
+location.reload()
+```
+
+**Flicker on Load:**
+- Ensure ThemeProvider is at the root level
+- Check for conflicting CSS transitions
+- Verify dark mode classes in Tailwind config
+
+### AI Service Issues
+
+**API Key Problems:**
+```bash
+# Verify API key format
+echo $PERPLEXITY_API_KEY | grep "pplx-"
+
+# Test API directly
+curl -X POST https://api.perplexity.ai/chat/completions \
+  -H "Authorization: Bearer $PERPLEXITY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"model":"llama-3.1-sonar-small-128k-online","messages":[{"role":"user","content":"test"}]}'
+```
+
+**Rate Limiting:**
+- Wait 60 seconds between requests
+- Check API quota in Perplexity dashboard
+- Implement request queuing for high traffic
+
+### Development Issues
+
+**Module Not Found:**
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+```
+
+**Build Failures:**
+```bash
+# Check for TypeScript errors
+npm run lint
+
+# Clear Vite cache
+rm -rf node_modules/.vite
+npm run dev
+```
+
+**Database Connection:**
+```bash
+# Test MongoDB connection
+mongosh "$MONGODB_URI"
+
+# Check network connectivity
+ping cluster0.mongodb.net
+```
 
 ### Environment Variables Checklist
 
