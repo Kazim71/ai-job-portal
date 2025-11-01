@@ -2,7 +2,8 @@ import { useContext, useRef, useState } from 'react'
 import { assets } from '../assets/assets'
 import { AppContext } from '../context/AppContext'
 import AISearch from './AISearch'
-import { FiSearch, FiMapPin, FiBot } from 'react-icons/fi'
+import { FiSearch, FiMapPin } from 'react-icons/fi'
+import { TbRobot } from 'react-icons/tb'
 
 const Hero = () => {
     const { setSearchFilter, setIsSearched } = useContext(AppContext)
@@ -65,7 +66,7 @@ const Hero = () => {
                         onClick={() => setShowAISearch(!showAISearch)}
                         className='inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium'
                     >
-                        <FiBot className='h-4 w-4' />
+                        <TbRobot className='h-4 w-4' />
                         {showAISearch ? 'Hide AI Assistant' : 'Ask AI Assistant'}
                     </button>
                 </div>
