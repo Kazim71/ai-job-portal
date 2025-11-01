@@ -10,6 +10,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    "validate-icons": "node ../scripts/validate-icons.js",
+    "prebuild": "npm run validate-icons",
     "generate-certs": "node -e \"console.log('Run: bash ../scripts/generate-certs.sh or ../scripts/generate-certs.bat')\"",
     "certs:unix": "bash ../scripts/generate-certs.sh",
     "certs:win": "../scripts/generate-certs.bat"
